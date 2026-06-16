@@ -57,8 +57,8 @@ CREATE TABLE bookings (
     booking_id SERIAL,
     user_id INT,
     match_id INT,
-    seat_number VARCHAR(20) NOT NULL,
-    payment_status VARCHAR(20) NOT NULL,
+    seat_number VARCHAR(20),
+    payment_status VARCHAR(20) ,
     total_cost NUMERIC(10,2) NOT NULL,
 
     CONSTRAINT pk_booking PRIMARY KEY (booking_id),
@@ -70,7 +70,9 @@ CREATE TABLE bookings (
       FOREIGN KEY (match_id) REFERENCES matches(match_id),
 
     CONSTRAINT chk_payment_status
-        CHECK (payment_status IN ('Pending', 'Confirmed', 'Cancelled', 'Refunded')),
+        CHECK (payment_status IN ('Pending', 'Confirmed', 'Cancelled', 'Refunded')
+        OR payment_status IS NULL
+        ),
 
     CONSTRAINT chk_total_cost
         CHECK (total_cost > 0),
